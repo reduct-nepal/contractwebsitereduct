@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link href='https://fonts.googleapis.com/css?family=Stylish' rel='stylesheet'>
+
+    <meta charset="UTF-8">
+    <title>Delete</title>
+    <h1>Are you sure you want to delete{{obj.first_name}}{{obj.last_name}} contract</h1>
+    <form method="POST">
+        {%csrf_token%}
+        <button class="btn btn-danger">Yes</button>
+    </form>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+
+{% block content %}
+
+<style>
+body{
+ margin: 0;
+ padding: 0;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+
+}
+
+.m {
+  float: left;
+
+}
+.n{
+float:right;
+display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: red;
+  text-decoration: none;
+}
+
+li .glyphicon{
+color:white;
+}
+
+
+li p{
+
+color:white;
+
+
+}
+</style>
+
+<body>
+
+<ul>
+  <li class='m'> <a class="headerclass" href="{% url 'showcontract' %}">
+      <span class="glyphicon glyphicon-home"></span><br class="hidden-xs"><p>Home</p></a></li>
+
+  <li class='m'>  <a class="headerclass" href="{% url 'register' %}">
+      <span class="glyphicon glyphicon-floppy-disk"></span><br class="hidden-xs"><p>SignUp</p></a></li>
+
+
+    <li class='n hidden-xs'>Reduct Contract</li>
+
+</ul>
+
+</body>
+</html>
+
+<style>
+
+.glyphicon{
+color:black;
+  }
+.headerclass{
+color:black;
+}
+</style>
+
+
+
+
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrapi-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<!-- Include the above in your HEAD tag -->
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<div class="container">
+    <style>
+            @charset "utf-8";
+
+
+@import url//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+
+
+
+div.main{
+    background: #0264d6; /* Old browsers */
+background: -moz-radial-gradient(center, ellipse cover,  #0264d6 1%, #1c2b5a 100%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,#0264d6), color-stop(100%,#1c2b5a)); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* IE10+ */
+background: radial-gradient(ellipse at center,  #0264d6 1%,#1c2b5a 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0264d6', endColorstr='#1c2b5a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+height:calc(100vh);
+width:100%;
+}
+
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+/* ---------- GENERAL ---------- */
+
+* {
+  box-sizing: border-box;
+    margin:0px auto;
+
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+
+}
+
+body {
+
+    color: #606468;
+  font: 87.5%/1.5em 'Open Sans', sans-serif;
+  margin: 0;
+  background-color: coral;
+}
+
+a {
+	color: #eee;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+input {
+	border: none;
+	font-family: 'Open Sans', Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.5em;
+	padding: 0;
+	-webkit-appearance: none;
+}
+
+p {
+	line-height: 1.5em;
+}
+
+.clearfix {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    content: ' ';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+}
+
+.container {
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ---------- LOGIN ---------- */
+
+#login form{
+	width: 250px;
+}
+#login, .logo{
+    display:inline-block;
+    width:40%;
+}
+#login{
+border-right:1px solid #fff;
+  padding: 0px 22px;
+  width: 59%;
+}
+.logo{
+color:#fff;
+font-size:50px;
+  line-height: 125px;
+}
+
+#login form span.fa {
+	background-color: #fff;
+	border-radius: 3px 0px 0px 3px;
+	color: #000;
+	display: block;
+	float: left;
+	height: 50px;
+    font-size:24px;
+	line-height: 50px;
+	text-align: center;
+	width: 50px;
+}
+
+#login form input {
+	height: 50px;
+}
+fieldset{
+    padding:0;
+    border:0;
+    margin: 0;
+
+}
+#login form input[type="text"], input[type="password"] {
+	background-color: #fff;
+	border-radius: 0px 3px 3px 0px;
+	color: #000;
+	margin-bottom: 1em;
+	padding: 0 16px;
+	width: 200px;
+}
+
+#login form input[type="submit"] {
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: #000000;
+  color: #eee;
+  font-weight: bold;
+  /* margin-bottom: 2em; */
+  text-transform: uppercase;
+  padding: 5px 10px;
+  height: 30px;
+}
+
+#login form input[type="submit"]:hover {
+	background-color: #d44179;
+}
+
+#login > p {
+	text-align: center;
+}
+
+#login > p span {
+	padding-left: 5px;
+}
+.middle {
+  display: flex;
+  width: 600px;
+}
+.register{
+position:absolute;
+left:70%;
+top:0%;
+}
+
+.contract{
+position:absolute;
+left:70%;
+top:60%;
+}
+</style>
+
+
+<center>
+<div class="middle">
+      <div id="login">
+          <fieldset class="clearfix">
+              <form method="post" action=".">
+                 {% csrf_token %}
+
+            <p ><span class="fa fa-user"></span><input type="text" name="username" Placeholder="Username" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+            <p><span class="fa fa-lock"></span><input type="password" name="password" Placeholder="Password" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+
+             <div>
+                 <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="{% url 'reset_password'%}">Forgot
+                                password?</a></span>
+
+                 <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" class="button" value="Sign In"></span>
+
+             </div>
+              </form>
+
+          </fieldset>
+<div class="clearfix"></div>
+        </form>
+
+
+      </div>
+</div>
+</center>
+    </div>
+{% endblock %}

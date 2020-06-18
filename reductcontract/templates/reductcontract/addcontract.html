@@ -1,0 +1,204 @@
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contractor Information</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<style>
+body{
+ margin: 0;
+ padding: 0;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+
+}
+
+.m {
+  float: left;
+
+}
+.n{
+float:right;
+display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: red;
+  text-decoration: none;
+}
+
+li .glyphicon{
+color:white;
+}
+li p{
+
+color:white;
+
+
+}
+
+
+
+input[type=text],input[type=number],input[type=email],input[type=date],input[type=tel], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color:black;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: red;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<ul>
+  <li class='m'> <a class="headerclass" href="{% url 'showcontract' %}">
+      <span class="glyphicon glyphicon-home"></span><br class="hidden-xs"><p>Home</p></a></li>
+  <li class='m'>   <a class="headerclass" href="{% url 'profile' %}">
+      <span class="glyphicon glyphicon-user"></span><br class="hidden-xs"><p> Profile</p></a></li>
+
+
+         {% if not request.user.is_authenticated %}
+    <li class='m'><a class="headerclass" href="{% url 'login' %}">
+        <span class="glyphicon glyphicon-log-in"></span><br class="hidden-xs"><p> Log-In</p></a></li>
+     {% endif %}
+
+          {% if  request.user.is_authenticated %}
+    <li class='m'><a class="headerclass" href="{% url 'logout' %}">
+        <span class="glyphicon glyphicon-log-out"></span><br class="hidden-xs"><p> Log-Out</p></a></li>
+     {% endif %}
+
+
+
+</ul>
+
+<div class="container">
+
+<h3 class="text-center">Register a New contractor</h3>
+
+<div>
+  <form action="." method="post">
+        {% csrf_token %}
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="country">Role*</label>
+    <select id="country" name="country" required>
+      <option value="Developer">Developer</option>
+      <option value="Intern">Intern</option>
+      <option value="Transcriber">Transcriber</option>
+    </select>
+
+      <label for="period">Contract Duration*</label>
+       <input type="number" id="period" name="period" placeholder="Enter contract duration in Months" required>
+
+      <label for="startdate">Start Date*</label>
+      <input type="date" id="startdate" name="startdate" required>
+
+      <label for="finishdate">Finish Date</label>
+      <input type="date" id="finishdate" name="finishdate" readonly>
+
+      <label for="onboard">On Board</label>
+      <input type="date" id="onboard" name="onboard" value="{{obj.on_board}}" required>
+
+
+      <label for="address">Address</label>
+      <input type="text" placeholder="Enter the address" id="address" name="address">
+
+      <label for="email">Email*</label>
+      <input type="email" id="email" name="email" placeholder="abc@gmail.com" required>
+
+      <label for="phone">Enter a phone number*:</label>
+      <input type="tel" id="phone" name="phone" placeholder="0123456789" pattern="[0-9]{10}" required>
+
+
+     <label for="clause">Clause:</label>
+      <textarea class="form-control" placeholder="Enter a condition or clause in the contract if any" rows="5" name="clause" id="clause"></textarea>
+
+
+      <input type="hidden" name="user_id" value="{{request.user.id}}">
+
+      <input type="submit" value="Submit">
+  </form>
+</div>
+</div>
+
+<script>
+    var a = document.getElementById('startdate');
+    var b = document.getElementById('period');
+    var c = document.getElementById('finishdate');
+     var d = document.getElementById('onboard');
+    document.getElementById('startdate').addEventListener('change',function(event){
+        var date = new Date(a.value);
+        var month = date.getMonth();
+        date.setMonth(month+Number(b.value));
+
+        p=new Date(date).toISOString().split('T')[0]
+
+        c.value=p;
+        d.value=a.value;
+
+
+    });
+
+</script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+{% endblock %}

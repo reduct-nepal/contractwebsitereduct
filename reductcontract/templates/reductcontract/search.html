@@ -1,0 +1,132 @@
+{% extends 'reductcontract/base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Your Result</title>
+</head>
+<body>
+<style>
+ .glyphicon{
+ color:black;
+ }
+ .glyphicon:hover{
+color:red;
+}
+
+#myhover:hover{
+color:black;
+}
+
+#myhover2:hover{
+color:black;
+}
+#myhover3:hover{
+color:black;
+}
+#nounderline{
+text-decoration:none;
+}
+.headerclass{
+text-decoration:none;
+}
+</style>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+
+
+<h1 class="text-center">Your Result</h1>
+<div class="container">
+
+<table class="table table-responsive-lg">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Role</th>
+           <th scope="col">Contract Duration</th>
+           <th scope="col">Start Date</th>
+           <th scope="col">Finish Date</th>
+          <th scope="col">On Board</th>
+           <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+           <th scope="col">Registered By</th>
+          <th scope="col">Action</th>
+          <th scope="col">Status</th>
+          <th scope="col">Clause</th>
+
+      </tr>
+    </thead>
+    <tbody>
+{% for i in sr %}
+
+<tr>
+    <td>{{i.first_name}}</td>
+        <td>{{i.last_name}}</td>
+        <td>{{i.role}}</td>
+          <td>{{i.contract_duration}} months</td>
+          <td>{{i.start_date}}</td>
+          <td>{{i.finish_date}}</td>
+           <td>{{i.on_board}}</td>
+          <td>{{i.phone_number}}</td>
+          <td>{{i.email}}</td>
+          <td>{{i.address}}</td>
+          <td>{{i.user}}</td>
+          <td><a class="headerclass" href="/{{i.id}}/update"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a class="headerclass" href="/{{i.id}}/delete" ><span class="glyphicon glyphicon-trash"></span></a></td>
+
+          {% if i.status == 'Active' %}
+     <td><span id="myhover" class="glyphicon glyphicon-ok d-flex justify-content-center "></span></td>
+          {% else %}
+          <td><span id="myhover2" class="glyphicon glyphicon-remove d-flex justify-content-center "></span><a id="nounderline" class="headerclass" href="/{{i.id}}/renew" ><span class="glyphicon glyphicon-refresh d-flex justify-content-center"></span></a></td>
+          {% endif %}
+
+          {% if i.clause %}
+          <td><a class="headerclass" href="/{{i.id}}/clause"><span  class="glyphicon glyphicon-eye-open d-flex justify-content-center "></span></a></td>
+          {% else %}
+          <td><span  class="glyphicon glyphicon-remove d-flex justify-content-center "></span></td>
+          {% endif %}
+      </tr>
+
+
+
+{% endfor %}
+
+    </tbody>
+  </table>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if sr.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ sr.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ sr.number }} of {{ sr.paginator.num_pages }}.
+        </span>
+
+        {% if sr.has_next %}
+            <a href="?page={{ sr.next_page_number }}">next</a>
+            <a href="?page={{ sr.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+{% endblock %}
