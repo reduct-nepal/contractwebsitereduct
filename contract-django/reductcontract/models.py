@@ -31,7 +31,7 @@ class contractor(models.Model):
     contract_duration=models.IntegerField()
     start_date=models.DateField()
     finish_date=models.DateField()
-    on_board=models.DateField(default=start_date)
+    on_board=models.DateField(default=datetime.date.today)
     clause=models.CharField(null=True,max_length=250)
     address=models.CharField(max_length=100)
     email=models.EmailField()
