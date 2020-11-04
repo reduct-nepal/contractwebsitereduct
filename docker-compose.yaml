@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    container_name: postgresdb
+    image: postgres:latest
+    restart: always
+    env_file:
+      - project.env
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  web:
+    container_name: django
+    build: contract-django/
+    command: ["./wait-for-it.sh", "python", "manage.py", "runserver", "0.0.0.0:8080"]
+    env_file:
+      - project.env
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+volumes:
+  postgres-data:
