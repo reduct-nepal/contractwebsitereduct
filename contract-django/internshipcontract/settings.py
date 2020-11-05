@@ -89,7 +89,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -129,14 +128,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'anurodhyadav072@gmail.com'
-EMAIL_HOST_PASSWORD = '9800875669'
-EMAIL_PORT = 587
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = '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'
+SENDGRID_SANDBOX_MODE_IN_DEBUG=False
+SENDGRID_ECHO_TO_STDOUT=True
