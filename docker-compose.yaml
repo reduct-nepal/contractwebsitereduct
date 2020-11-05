@@ -26,13 +26,29 @@ services:
   web:
     container_name: django
     build: contract-django/
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+    command: >
+      gunicorn internshipcontract.wsgi:application --bind 0.0.0.0:8000 --workers=4
     env_file:
       - project.env
-    ports:
-      - 8080:8080
+    expose:
+      - 8080
     depends_on:
       - db
+    volumes:
+      - staticfiles:/home/app/web/staticfiles
+
+  nginx:
+    container_name: nginx
+    image: nginx:mainline-alpine
+    restart: always
+    ports:
+      - 1337:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - staticfiles:/home/app/web/staticfiles
+    depends_on:
+      - web
 
 volumes:
   postgres-data:
+  staticfiles:
