@@ -22,7 +22,8 @@ from .forms import *
 from django.conf import settings
 from django.contrib.auth.models import User
 import datetime
-
+from  django.core.mail import send_mail,BadHeaderError
+import os
 
 from django.http import HttpResponse
 # Create your views here.
@@ -49,10 +50,17 @@ def register(request):
                 'token': account_activation_token.make_token(user),
                 })
                 to_email = user_form.cleaned_data.get('email')
-                email = EmailMessage(
-                mail_subject, message, to=[to_email]
-                )
-                email.send()
+                try:
+                    send_mail(
+                        mail_subject,
+                        message,
+                        'prasen@humanassisted.ai',
+                        [to_email],
+                        fail_silently=False,
+                    )
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found')
+
                 return HttpResponse('Please confirm your email address to complete the registration.A mail has been sent to your email address with the conformation link')
 
     else:
@@ -162,17 +170,18 @@ def addcontract(request):
             if myp.exists():
                 return HttpResponse('The phone already exists')
             if not obj.exists() and not myp.exists():
-                query.save()
-                sendmail =EmailMessage(
-                   'Congratulation,Your contract is registered',
-                   'Your contract is registered as {} and starting from {} and ending at{},Best of luck'.format(role,start_date,finish_date),
-                   settings.EMAIL_HOST_USER,
-                   [email],
-                )
-                sendmail.fail_silently = False
-                sendmail.send()
-
-                return redirect('showcontract')
+                try:
+                    send_mail(
+                        'Congratulation your contract is registered',
+                        'Your contract is registered as {} with the period of {} starting at {} and ending at {}'.format(role, contract_duration, start_date, finish_date),
+                        'prasen@humanassisted.ai',
+                        [email],
+                        fail_silently=False,
+                    )
+                    query.save()
+                    return redirect('showcontract')
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found')
 
         else:
 
@@ -214,12 +223,6 @@ def clause(request,iod):
         'obj':obj
     }
     return render(request,'reductcontract/clause.html',context)
-
-
-
-
-
-
 
 
 def contractupdate(request,iod):
@@ -264,18 +267,19 @@ def contractupdate(request,iod):
                 if myp.exists():
                     return HttpResponse('The phone number you updated to is already associated with other contractor')
                 if not obj.exists() and not myp.exists():
-                    query.save()
-                    sendmail=EmailMessage(
-                    'Your Contract is updated',
-                    'Your new contract is of role as {} with the period of {} starting at {} and ending at {}'.format(role,contract_duration,start_date,finish_date),
-                     settings.EMAIL_HOST_USER,
-                    [email],
-
-                    )
-                    sendmail.fail_silently=False
-                    sendmail.send()
-
-                    return redirect('showcontract')
+                    try:
+                        send_mail(
+                            'Congratulation your contract is Updated',
+                            'Your new contract is registered as {} with the period of {} starting at {} and ending at {}'.format(
+                                role, contract_duration, start_date, finish_date),
+                            'prasen@humanassisted.ai',
+                            [email],
+                            fail_silently=False,
+                        )
+                        query.save()
+                        return redirect('showcontract')
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found')
 
             else:
                  return render(request,'reductcontract/contractupdate.html',context)
@@ -309,19 +313,19 @@ def contractrenew(request,iod):
                 query.email=obj.email
                 query.phone_number=obj.phone_number
                 query.user_id=obj.user.id
-                query.save()
-                sendmail = EmailMessage(
-                    'Your Contract is Renewed',
-                    'Your new contract is of role as {} with the period of {} starting at {} and ending at {}'.format(
-                        obj.role, contract_duration, start_date, finish_date),
-                    settings.EMAIL_HOST_USER,
-                    [obj.email],
-
-                )
-                sendmail.fail_silently = False
-                sendmail.send()
-
-                return redirect('showcontract')
+                try:
+                    send_mail(
+                        'Your Contract is Renewed ',
+                        'Your new contract is of role as {} with the period of {} starting at {} and ending at {}'.format(
+                            obj.role, contract_duration, start_date, finish_date),
+                        'prasen@humanassisted.ai',
+                        [obj.email],
+                        fail_silently=False,
+                    )
+                    query.save()
+                    return redirect('showcontract')
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found')
 
             else:
                 return render(request,'reductcontract/contractrenew.html',context)
@@ -339,17 +343,19 @@ def contractdelete(request,iod):
             return HttpResponse('<h1>You cannot delete it as it was not registered by you,only {} can delete it</h1>'.format(obj.user))
         else:
             if request.method=='POST':
-                sendmail = EmailMessage(
-                    'Your Contract is deleted}',
-                    'Your contract with Reduct Nepal Pvt Limited as a {} ,which started at {} is deleted,'.format(obj.role,obj.start_date),
-                    settings.EMAIL_HOST_USER,
-                    [obj.email],
-
-                )
-                sendmail.fail_silently = False
-                sendmail.send()
-                obj.delete()
-                return redirect('showcontract')
+                try:
+                    send_mail(
+                        'Your Contract is Terminated ',
+                        'Your contract with Reduct Nepal Pvt Limited as a {} ,which started at {} is deleted,'.format(
+                            obj.role, obj.contract_duration, obj.start_date),
+                        'prasen@humanassisted.ai',
+                        [obj.email],
+                        fail_silently=False,
+                    )
+                    obj.delete()
+                    return redirect('showcontract')
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found')
             else:
                 return render(request,'reductcontract/contractdelete.html',context)
     else:

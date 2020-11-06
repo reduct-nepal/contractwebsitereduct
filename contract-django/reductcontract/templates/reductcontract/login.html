@@ -289,8 +289,7 @@ top:60%;
       <div id="login">
           <fieldset class="clearfix">
               <form method="post" action=".">
-                 {% csrf_token %}
-
+                  {% csrf_token %}
             <p ><span class="fa fa-user"></span><input type="text" name="username" Placeholder="Username" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
             <p><span class="fa fa-lock"></span><input type="password" name="password" Placeholder="Password" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
 
