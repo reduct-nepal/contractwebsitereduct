@@ -8,23 +8,24 @@ ENV PYTHONDONTWRITEBYTECODE 1
 RUN apt-get update \
   && apt-get install -y netcat
 
-# Make a new directory to put our code in.
-RUN mkdir /code
+# Create an app user 
+RUN useradd --user-group --create-home --no-log-init --shell /bin/bash app
 
-# Change the working directory. 
-# Every command after this will be run from the /code directory.
-WORKDIR /code
+ENV APP_HOME=/home/app/web
 
-# Copy the requirements.txt file.
-COPY ./requirements.txt /code/
+# Create the staticfiles directory. This avoids permission errors. 
+RUN mkdir -p $APP_HOME/staticfiles
 
-# Upgrade pip
+WORKDIR $APP_HOME
+
+COPY requirements.txt $APP_HOME
 RUN pip install --upgrade pip
-
-# Install the requirements.
 RUN pip install -r requirements.txt
 
-RUN echo "test"
+COPY . $APP_HOME
 
-# Copy the rest of the code. 
-COPY . /code/
+RUN chown -R app:app $APP_HOME
+
+USER app:app
+
+ENTRYPOINT ["/home/app/web/entrypoint.sh"]
