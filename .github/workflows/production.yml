@@ -44,3 +44,9 @@ jobs:
           ssh-add - <<< "${{ secrets.PROD__SSH_PRIVATE_KEY }}"
           chmod 600 ~/.ssh/id_rsa && chmod 600 ~/.ssh/known_hosts
           rsync -avz -e "ssh -i ~/.ssh/id_rsa" ./ root@159.65.154.191:/root/contract-mgmt
+          ssh -i ~/.ssh/id_rsa root@159.65.154.191 << EOL
+          cd /root/contract-mgmt
+          docker-compose down
+          docker-compose build
+          docker-compose up -d
+          EOL
