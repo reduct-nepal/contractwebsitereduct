@@ -21,6 +21,21 @@ jobs:
       - name: Checkout the latest code
         uses: actions/checkout@v2
 
+      # Runs a single command using the runners shell
+      - name: Create .env file
+      run: |
+        touch .env
+        cat > .env << EOL
+        POSTGRES_USER='${{ secrets.PROD__POSTGRES_USER }}'
+        POSTGRES_PASSWORD='${{ secrets.PROD__POSTGRES_PASSWORD }}'
+        POSTGRES_DB='${{ secrets.PROD__POSTGRES_DB }}'
+        DATABASE='${{ secrets.PROD__DATABASE }}'
+        DATABASE_HOST='${{ secrets.PROD__DATABASE_HOST }}'
+        DATABASE_PORT='${{ secrets. PROD__DATABASE_PORT }}'
+        SECRET_KEY='${{ secrets.PROD__SECRET_KEY }}'
+        SENDGRID_API_KEY='${{ secrets.PROD__SENDGRID_API_KEY }}'
+        EOL
+
       - name: Deploy to Production server
         run: |
           mkdir ~/.ssh

@@ -9,4 +9,7 @@ class Database:
 
 
 class Secrets:
-    SECRET_KEY = "os9van(ng23b4m-8=tddw*q+@ya_rxi!%@$vmoyel#^-pmt7tj"
+    SECRET_KEY = os.getenv('SECRET_KEY')
+
+class Sendgrid:
+    SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
