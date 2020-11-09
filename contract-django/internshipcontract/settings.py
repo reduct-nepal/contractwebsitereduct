@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from internshipcontract.keyconfig import Database, Secrets
+from internshipcontract.keyconfig import Database, Secrets, Sendgrid
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -133,6 +133,6 @@ MEDIA_URL = '/media/'
 
 
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = Sendgrid.SENDGRID_API_KEY
 SENDGRID_SANDBOX_MODE_IN_DEBUG=False
 SENDGRID_ECHO_TO_STDOUT=True
