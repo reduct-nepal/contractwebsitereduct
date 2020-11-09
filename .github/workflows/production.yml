@@ -26,14 +26,14 @@ jobs:
         run: |
           touch .env
           cat > .env << EOL
-          POSTGRES_USER='${{ secrets.PROD__POSTGRES_USER }}'
-          POSTGRES_PASSWORD='${{ secrets.PROD__POSTGRES_PASSWORD }}'
-          POSTGRES_DB='${{ secrets.PROD__POSTGRES_DB }}'
-          DATABASE='${{ secrets.PROD__DATABASE }}'
-          DATABASE_HOST='${{ secrets.PROD__DATABASE_HOST }}'
-          DATABASE_PORT='${{ secrets. PROD__DATABASE_PORT }}'
-          SECRET_KEY='${{ secrets.PROD__SECRET_KEY }}'
-          SENDGRID_API_KEY='${{ secrets.PROD__SENDGRID_API_KEY }}'
+          POSTGRES_USER=${{ secrets.PROD__POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.PROD__POSTGRES_PASSWORD }}
+          POSTGRES_DB=${{ secrets.PROD__POSTGRES_DB }}
+          DATABASE=${{ secrets.PROD__DATABASE }}
+          DATABASE_HOST=${{ secrets.PROD__DATABASE_HOST }}
+          DATABASE_PORT=${{ secrets. PROD__DATABASE_PORT }}
+          SECRET_KEY=${{ secrets.PROD__SECRET_KEY }}
+          SENDGRID_API_KEY=${{ secrets.PROD__SENDGRID_API_KEY }}
           EOL
 
       - name: Deploy to Production server
@@ -44,4 +44,3 @@ jobs:
           ssh-add - <<< "${{ secrets.PROD__SSH_PRIVATE_KEY }}"
           chmod 600 ~/.ssh/id_rsa && chmod 600 ~/.ssh/known_hosts
           rsync -avz -e "ssh -i ~/.ssh/id_rsa" ./ root@159.65.154.191:/root/contract-mgmt
-          EOL
